@@ -1,0 +1,9 @@
+[package]
+name = "cozofs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+cozo = "0.7.6"
+uuid = "1.9.1"
+walkdir = "2.5.0"

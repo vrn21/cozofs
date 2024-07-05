@@ -1,0 +1,3 @@
+nodes: Directory, File
+attributes: uuid,name,children(Directory) or parent(File,Directory), path
+relations: contains,childof
