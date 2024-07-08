@@ -7,7 +7,7 @@ pub fn create_folder_file_scehma() -> &'static str {
         {
             :create Directory
             {
-                uuid: String,
+                uuid: String, =>
                 name: String,
                 parent: String,
                 path: String,
@@ -18,7 +18,7 @@ pub fn create_folder_file_scehma() -> &'static str {
         {
             :create File
             {
-                uuid: String,
+                uuid: String, =>
                 name: String,
                 parent: String,
                 path: String,
@@ -109,11 +109,14 @@ pub fn delete_dir_from_path_script(path: String) -> String {
 pub fn update_path(uuid: String, new_path: String, entry: String) -> String {
     format!(
         "
-            ?[uuid, name, parent, path,entry] := uuid = {}, *Directory[uuid, name, parent, path,entry], path='{}'
-            :update Directory {{uuid, name, parent, path,entry}}
+            ?[uuid, path] := uuid = {}, *Directory{{uuid}}, path='{}'
+            :update Directory {{uuid,path}}
         ",
         uuid, new_path
     )
 }
-
+// "
+// ?[id,Age] := id = 1, *person{id}, Age = 29
+// :update person {id,Age}
+// "
 // pub fn update_name(uuid: &str) -> String {}

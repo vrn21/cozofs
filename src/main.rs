@@ -67,7 +67,7 @@ fn main() {
     //db.delete_dir_from_uuid(&uuid);
     db.get_entries_in_dir(parent.clone());
     //db.delete_dir_from_path("/Users/vrn21/Developer/DummyDrive/child/child_of_child".to_string());
-    db.update_path_dir("/".to_string(), uuid);
+    db.update_path_dir("updated path".to_string(), uuid);
     db.get_entries_in_dir(parent.clone());
     // db.show_all();
 }

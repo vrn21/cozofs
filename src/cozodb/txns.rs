@@ -80,14 +80,6 @@ impl CozoDB {
     }
 
     pub fn update_path_dir(&self, new_path: String, uuid: String) {
-        self.run(&update_path(
-            uuid.clone(),
-            "/Users/vrn21".to_string(),
-            "dir".to_string(),
-        ));
-        println!(
-            "script is {}",
-            &update_path(uuid, "/Users/vrn21".to_string(), "dir".to_string(),)
-        )
+        self.run(&update_path(uuid.clone(), new_path, "dir".to_string()));
     }
 }
