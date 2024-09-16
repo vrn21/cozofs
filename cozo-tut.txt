@@ -1,0 +1,62 @@
+NODES:
+*Directory
+*File
+
+RELATIONS:
+*CONTAINS
+
+creating schema:
+"{
+            :create Directory
+            {
+                uuid: String,
+                =>
+                name: String,
+                parent: String,
+                path: String,
+                entry:String
+            }
+        }
+
+        {
+            :create File
+            {
+                uuid: String, =>
+                name: String,
+                parent: String,
+                path: String,
+                entry:String
+            }
+
+        }
+
+        {
+            :create CONTAINS
+            {
+                parent_uuid:Uuid,
+                child_uuid:Uuid,
+            }
+        }
+
+"
+
+lets say we need to input data options: json or manual txns
+
+?[uuid,name,parent,path,entry] <- [['13423434534','file_name','/parent/','/parent/child/file_name','File']]
+:put File {uuid,name,parent,path,entry}
+
+read all entries :
+        files[uuid,name,parent,path,entry] := *File{uuid,name,parent,path,entry}
+        folders[uuid,name,parent,path,entry] := *Directory{uuid,name,parent,path,entry}
+        ?[uuid,name,parent,path,entry] := files[uuid,name,parent,path,entry] or folders[uuid,name,parent,path,entry]
+
+
+Updating filename:
+?[uuid,name] := uuid='49523452',*File{uuid},name='new_file_name'
+        :update File{uuid,name}
+
+
+
+deleting a file:
+?[uuid, name, parent, path,entry] := *File[uuid, name, parent, path,entry],uuid = '32452345'
+        :delete Directory{uuid, name, parent, path,entry}

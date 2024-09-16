@@ -82,4 +82,8 @@ impl CozoDB {
     pub fn update_path_dir(&self, new_path: String, uuid: String) {
         self.run(&update_path(uuid.clone(), new_path, "dir".to_string()));
     }
+
+    pub fn rename_file(&self, new_name: String, uuid: String) {
+        self.run(&rename_file(uuid, new_name, "file".to_string()));
+    }
 }

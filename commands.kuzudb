@@ -1,0 +1,71 @@
+
+//creates a NODE named Entry
+CREATE NODE TABLE Entry(kind STRING
+,name STRING
+, uuid SERIAL
+, size UINT64
+,lastmodified TIMESTAMP
+,etag STRING,
+PRIMARY KEY(uuid)
+)
+
+//creates relation called CONTAINS
+CREATE REL TABLE CONTAINS(FROM Entry TO Entry)
+
+
+match (n:Entry),(m:Entry) where n.name='root' and
+create (n)-[c:CONTAINS]-> (m)
+
+MATCH (n:Entry)-[e:CONTAINS]->(m:Entry)
+RETURN n;
+
+MATCH (n:Entry) return n;
+
+CHECKPOINT;
+//after checkpoint only we can update the same tuple again. we got a write-write error
+
+match (n:Entry) where n.uuid=3 set n.kind='File';
+
+//this shows all entries that contains entry
+MATCH (n:Entry)-[e:CONTAINS]->(m:Entry)
+RETURN n,e,m;
+
+
+CREATE (:Entry {kind:"Dir",name: 'root',size:10,lastmodified:timestamp("1970-01-01 00:00:00.004666-10"), etag: "etagisthis"}),
+(:Entry  {kind:"Dir",name: 'varun',size:10,lastmodified:timestamp("1970-01-01 00:00:00.004666-10"), etag: "etagisthis"}),
+(:Entry  {kind:"Dir",name: 'biplab',size:10,lastmodified:timestamp("1970-01-01 00:00:00.004666-10"), etag: "etagisthis"}),
+(:Entry  {kind:"File",name: 'os.pdf',size:10,lastmodified:timestamp("1970-01-01 00:00:00.004666-10"), etag: "etagisthis"}),
+(:Entry  {kind:"File",name: 'Hello world.docx',size:10,lastmodified:timestamp("1970-01-01 00:00:00.004666-10"), etag: "etagisthis"}),
+(:Entry  {kind:"Dir",name: 'child',size:10,lastmodified:timestamp("1970-01-01 00:00:00.004666-10"), etag: "etagisthis"}),
+(:Entry  {kind:"File",name: 'ajay.txt',size:10,lastmodified:timestamp("1970-01-01 00:00:00.004666-10"), etag: "etagisthis"}),
+(:Entry  {kind:"File",name: 'arjun.txt',size:10,lastmodified:timestamp("1970-01-01 00:00:00.004666-10"), etag: "etagisthis"}),
+(:Entry  {kind:"File",name: 'cozo.txt',size:10,lastmodified:timestamp("1970-01-01 00:00:00.004666-10"), etag: "etagisthis"}),
+(:Entry  {kind:"File",name: 'kuzo.txt',size:10,lastmodified:timestamp("1970-01-01 00:00:00.004666-10"), etag: "etagisthis"});
+
+
+
+//creates relationship between root and varun
+match (n:Entry),(m:Entry) where n.name='root' and m.name='varun'
+create (n)-[c:CONTAINS]-> (m)
+
+
+match (varun:Entry) where varun.name='varun'
+//creates
+match (biplab:Entry) where biplab.name='biplab'
+match (os:Entry) where os.name='os.pdf'
+match (doc:Entry) where doc.name='Hello world.docx'
+match (child:Entry) where child.name='child'
+match (ajay:Entry) where ajay.name='ajay.txt'
+match (arjun:Entry) where arjun.name='arjun.txt'
+match (cozo:Entry) where cozo.name='cozo.txt'
+match (kuzo:Entry) where kuzo.name='kuzo.txt'
+create (varun)-[:CONTAINS]-> (child) -[:CONTAINS]->(arjun)
+create (child) -[:CONTAINS]->(ajay)
+create (varun)-[:CONTAINS]-> (os)
+create (varun)-[:CONTAINS]-> (doc)
+create (biplab)-[:CONTAINS]-> (cozo)
+create (biplab)-[:CONTAINS]-> (kuzo)
+
+
+MATCH (n:Entry)-[c:CONTAINS]->(m:Entry)
+return n,m,c;

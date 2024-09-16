@@ -1,0 +1,31 @@
+//type: File / Folder  lesser memory:(is_dir bool?)
+
+name: Name of the file or folder.
+
+old_name: Previous name. Applies for files only.
+
+uuid: Uuid of the file/folder. Can be blank if unknown.
+
+size: Size in bytes (for files).
+
+created: When resource was created, e.g.: Wed, 30 Mar 2022 21:06:35 GMT.
+
+lastmodified: When resource was last modified on the server, e.g.: Wed, 30 Mar 2022 21:06:35 GMT.
+
+lastmodified_server: Similar to lastmodified, but set by the client system which performed the last modification.
+
+local_created: When a new file or folder was created in this local system. After sync to server, this value should reflect the created value from server.
+
+local_lastmodified: Last modified timestamp of the file in local cache. Set only when file is changed locally.
+
+local_lastmodified_server: Similar to local_lastmodified. Set only when file is changed locally. Local changes in a file is only considered to be complete when post PUT, server's lastmodified = local_lastmodified, and server's lastmodified_server = local_lastmodified_server via PROPPATCH followed by update of lastmodified and lastmodified_server values in the local DB too.
+
+keep_offline: Whether to keep the content of this folder or file for offline use or not. Such content are not cleared from local cache during any routine cleanup activity.
+
+etag: Etag of a file or folder. Can only be set by the server. After PUT and PROPPATCH, client needs to send PROPFIND request to get the new etag.
+
+status_icon: in_sync | only_on_server | only_in_local | sync_in_progress | error
+
+path_in_cache: Path where the file is stored in local cache in its encrypted form.
+
+encryption_key: Key used for encryption/decryption of the file from local cache.

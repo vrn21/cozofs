@@ -1,3 +1,13 @@
 nodes: Directory, File
 attributes: uuid,name,children(Directory) or parent(File,Directory), path
 relations: contains,childof
+
+
+
+*directory,*file
+*contains,*child_of
+
+
+parent[uuid] := *Directory{uuid,path},path="/Users/vrn21/"
+children[uuid] := *CONTAINS{uuid,child_uuid},parent[uuid]
+?[*] := children[*]
